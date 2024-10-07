@@ -10,3 +10,5 @@ const CartSummary = ({ cartItems }) => {
         </div>
     );
 };
+
+export default CartSummary;
