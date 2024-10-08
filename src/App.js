@@ -5,6 +5,7 @@ import ModalCart from './components/ModalCart';
 import Footer from './components/Footer';
 import CartSummary from './components/CartSummary';
 import Notification from './components/Notification';
+import ProductDetail from './components/ProductDetail';
 import './index.css';
 
 const products = [
@@ -44,7 +45,7 @@ const App = () => {
                 {selectedProduct && <ProductDetail product={selectedProduct} closeDetail={closeDetail} />}
             </main>
             <ModalCart isOpen={isCartOpen} closeCart={closeCart} cartItems={cartItems} />
-            <CartSummary cartItems={cartItems} />
+            {cartItems.length > 0 && <CartSummary cartItems={cartItems} />}
             {notification && <Notification message={notification} closeNotification={() => setNotification('')} />}
             <Footer />
         </div>
