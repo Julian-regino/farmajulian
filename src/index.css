@@ -139,3 +139,9 @@ footer {
   height: 30px;
   cursor: pointer;
 }
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
