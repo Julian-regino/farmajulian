@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
-import ProductCard from './components/ProductCard';
+import ProductList from './components/ProductList';
 import ModalCart from './components/ModalCart';
 import Footer from './components/Footer';
+import CartSummary from './components/CartSummary';
+import Notification from './components/Notification';
 import './index.css';
 
 const products = [
@@ -13,10 +15,13 @@ const products = [
 const App = () => {
     const [cartItems, setCartItems] = useState([]);
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [notification, setNotification] = useState('');
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const addToCart = (product) => {
         setCartItems([...cartItems, product]);
-        alert(`${product.name} añadido al carrito de ventas`);
+        setNotification(`${product.name} añadido al carrito.`);
+        setTimeout(() => setNotification(''), 3000); // Ocultar notificación después de 3 segundos
     };
 
     const openCart = () => {
@@ -27,15 +32,20 @@ const App = () => {
         setIsCartOpen(false);
     };
 
+    const closeDetail = () => {
+        setSelectedProduct(null);
+    };
+
     return (
         <div>
             <Header openCart={openCart} />
             <main>
-                {products.map((product, index) => (
-                    <ProductCard key={index} product={product} addToCart={addToCart} />
-                ))}
+                <ProductList products={products} addToCart={addToCart} />
+                {selectedProduct && <ProductDetail product={selectedProduct} closeDetail={closeDetail} />}
             </main>
             <ModalCart isOpen={isCartOpen} closeCart={closeCart} cartItems={cartItems} />
+            <CartSummary cartItems={cartItems} />
+            {notification && <Notification message={notification} closeNotification={() => setNotification('')} />}
             <Footer />
         </div>
     );
